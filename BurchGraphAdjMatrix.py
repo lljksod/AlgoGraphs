@@ -57,12 +57,16 @@ class BurchGraphAdjMatrix(BurchGraph):
 		if x in self.payloads.keys():
 			del self.payloads[x]
 
-		if x in self.edges.keys():
-			del self.edges[x]
+		del self.edges[self.vertices[x]]
 
-		for i in self.edges.keys():
-			if x in self.edges[i]:
-				self.edges[i].remove(x)
+		for node in self.edges:
+			del node[self.vertices[x]]
+
+		for node in self.vertices:
+			if self.vertices[node] > self.vertices[x]:
+				self.vertices[node] -= 1
+
+		del self.vertices[x]
 
 
 	def dfs(g, startNode, action = print, path = []):
@@ -149,8 +153,11 @@ test.addNode(3)
 test.addNode(4)
 test.addEdge(2,1)
 test.addEdge(4,6)
+test.addEdge(1,6)
 test.deleteEdge(4,6)
 test.deleteEdge(2,1)
+test.deleteNode(2)
+test.deleteNode(6)
 print(test.edges)
 #test.addEdge(2,0)
 #test.addEdge(2,3)
