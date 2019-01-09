@@ -14,7 +14,6 @@ class BurchGraphAdjMatrix(BurchGraph):
 	def neighbors(self,x):
 		nbors = []
 		index = 0
-		print("List for 1 = " + str(self.edges[self.vertices[x]]))
 		for edge in self.edges[self.vertices[x]]:
 			if edge == 1:
 				nbors.append(list(self.vertices.keys())[index])
