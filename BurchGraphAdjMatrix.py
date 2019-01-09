@@ -1,8 +1,9 @@
 from BurchGraphClass import BurchGraph
 
-class BurchGraphAdjList(BurchGraph):
+class BurchGraphAdjMatrix(BurchGraph):
 	
-	edges = dict()
+	vertices = dict()
+	edges = []
 
 	def adjacent(self,x,y):
 		if y in self.edges[x]:
@@ -21,7 +22,7 @@ class BurchGraphAdjList(BurchGraph):
 		if y not in self.payloads.keys():
 			self.addNode(y,ypload)
 
-		self.edges[x].append(y)
+		self.edges[self.vertices[x]][self.vertices[y]] = 1
 
 
 
@@ -37,7 +38,16 @@ class BurchGraphAdjList(BurchGraph):
 		contents it will be set to None"""
 		if x not in self.payloads.keys():
 			self.payloads[x] = payload
-			self.edges[x] = []
+			self.edges.append([])
+			self.vertices[x] = self.edges.index(self.edges[-1])
+			while len(self.edges[self.vertices[x]]) < self.vertices[x]:
+				self.edges[self.vertices[x]].append(0)
+
+			self.edges[self.vertices[x]].append(1)
+			
+			for node in self.edges:
+				while len(node) < self.vertices[x] + 1:
+					node.append(0)
 		else:
 			print('Node already exists.')
 
@@ -113,7 +123,7 @@ class BurchGraphAdjList(BurchGraph):
 
 
 
-test = BurchGraphAdjList()
+test = BurchGraphAdjMatrix()
 """
 test.addNode('a', 2)
 test.addNode(0)
@@ -134,20 +144,18 @@ print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
 test.bfs('a')"""
 
 test.addNode(2)
-test.addEdge(2,0)
-test.addEdge(2,3)
-test.addEdge(0,2)
-test.addEdge(0,1)
-test.addEdge(1,2)
-test.addEdge(3,3)
-print(test.neighbors(2))
-test.dfs(2)
-test.bfs(2)
+test.addNode(1)
+test.addNode(3)
+test.addNode(4)
+test.addEdge(2,1)
+print(test.edges)
+#test.addEdge(2,0)
+#test.addEdge(2,3)
+#test.addEdge(0,2)
+#test.addEdge(0,1)
+#test.addEdge(1,2)
+#test.addEdge(3,3)
+#print(test.neighbors(2))
+#test.dfs(2)
+#test.bfs(2)
 
-testlist = []
-testlist.append(0)
-testlist.append(1)
-testlist.append(2)
-testlist.append(3)
-testlist.append('test')
-print(testlist.pop(-1))
