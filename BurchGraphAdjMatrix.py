@@ -113,10 +113,8 @@ class BurchGraphAdjMatrix(BurchGraph):
 			index = 0
 			print("index = " + str(g.vertices[node]))
 			for neighbor in g.edges[g.vertices[node]]:
-				print(list(g.vertices.keys())[index])
 				if (neighbor == 1) & (list(g.vertices.keys())[index] not in visited):
 					path.append(list(g.vertices.keys())[index])
-					print('Path ' + str(path))
 				index += 1
 					
 		while path:
@@ -128,14 +126,17 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 		path.append(startNode)
 
-		action(startNode)
 
 		for node in path:
 			visited.append(node)
-			for neighbor in g.edges[path.pop(0)]:
-				if neighbor not in visited:
-					path.append(neighbor)
-					action(neighbor)
+			index = 0
+			for neighbor in g.edges[g.vertices[node]]:
+				if (neighbor == 1) & (list(g.vertices.keys())[index] not in visited):
+					path.append(list(g.vertices.keys())[index])
+				index += 1
+				
+			while path:
+				action(path.pop(0))
 
 
 
@@ -175,6 +176,7 @@ print(test.adjacent(4,6))
 print(test.edges)
 print("neighbors " + str(test.neighbors(4)))
 test.dfs(1)
+test.bfs(1)
 #test.addEdge(2,0)
 #test.addEdge(2,3)
 #test.addEdge(0,2)
@@ -184,4 +186,3 @@ test.dfs(1)
 #print(test.neighbors(2))
 #test.dfs(2)
 #test.bfs(2)
-
