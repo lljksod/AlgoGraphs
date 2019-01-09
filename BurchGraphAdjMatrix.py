@@ -12,7 +12,16 @@ class BurchGraphAdjMatrix(BurchGraph):
 			return False
 
 	def neighbors(self,x):
-		return self.edges[x]
+		nbors = []
+		index = 0
+		print("List for 1 = " + str(self.edges[self.vertices[x]]))
+		for edge in self.edges[self.vertices[x]]:
+			if edge == 1:
+				nbors.append(list(self.vertices.keys())[index])
+			index += 1
+
+		return nbors
+
 
 	def addEdge(self,x,y,ypload = None):
 		""" Adds edge between the provided nodes. If the second node does not exist it is
@@ -161,6 +170,7 @@ test.deleteEdge(2,1)
 print(test.adjacent(2,1))
 print(test.adjacent(4,6))
 print(test.edges)
+print("neighbors " + str(test.neighbors(4)))
 #test.addEdge(2,0)
 #test.addEdge(2,3)
 #test.addEdge(0,2)
