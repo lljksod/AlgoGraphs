@@ -6,8 +6,10 @@ class BurchGraphAdjMatrix(BurchGraph):
 	edges = []
 
 	def adjacent(self,x,y):
-		if y in self.edges[x]:
+		if self.edges[self.vertices[x]][self.vertices[y]] == 1:
 			return True
+		else:
+			return False
 
 	def neighbors(self,x):
 		return self.edges[x]
@@ -154,10 +156,10 @@ test.addNode(4)
 test.addEdge(2,1)
 test.addEdge(4,6)
 test.addEdge(1,6)
-test.deleteEdge(4,6)
+#test.deleteEdge(4,6)
 test.deleteEdge(2,1)
-test.deleteNode(2)
-test.deleteNode(6)
+print(test.adjacent(2,1))
+print(test.adjacent(4,6))
 print(test.edges)
 #test.addEdge(2,0)
 #test.addEdge(2,3)

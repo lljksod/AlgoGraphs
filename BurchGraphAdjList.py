@@ -7,6 +7,8 @@ class BurchGraphAdjList(BurchGraph):
 	def adjacent(self,x,y):
 		if y in self.edges[x]:
 			return True
+		else:
+			return False
 
 	def neighbors(self,x):
 		return self.edges[x]
