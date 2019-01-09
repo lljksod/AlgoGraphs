@@ -134,9 +134,10 @@ class BurchGraphAdjMatrix(BurchGraph):
 				if (neighbor == 1) & (list(g.vertices.keys())[index] not in visited):
 					path.append(list(g.vertices.keys())[index])
 				index += 1
-				
-			while path:
-				action(path.pop(0))
+			
+		print(path)
+		while path:
+			action(path.pop(0))
 
 
 
@@ -163,26 +164,12 @@ print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
 test.bfs('a')"""
 
 test.addNode(2)
-test.addNode(1)
-test.addNode(3)
-test.addNode(4)
-test.addEdge(2,1)
-test.addEdge(4,6)
-test.addEdge(1,6)
-#test.deleteEdge(4,6)
-test.deleteEdge(2,1)
-print(test.adjacent(2,1))
-print(test.adjacent(4,6))
-print(test.edges)
-print("neighbors " + str(test.neighbors(4)))
-test.dfs(1)
-test.bfs(1)
-#test.addEdge(2,0)
-#test.addEdge(2,3)
-#test.addEdge(0,2)
-#test.addEdge(0,1)
-#test.addEdge(1,2)
-#test.addEdge(3,3)
-#print(test.neighbors(2))
-#test.dfs(2)
-#test.bfs(2)
+test.addEdge(2,0)
+test.addEdge(2,3)
+test.addEdge(0,2)
+test.addEdge(0,1)
+test.addEdge(1,2)
+test.addEdge(3,3)
+print('nighbors of 3 =' + str(test.neighbors(0)))
+test.dfs(2)
+test.bfs(2)
