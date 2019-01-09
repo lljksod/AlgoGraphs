@@ -70,6 +70,10 @@ class BurchGraphAdjList(BurchGraph):
 		print(startNode)
 
 		return path
+		Originally used the above method. After figuring this part out I was
+		able to put together a non-recursive version of bfs below with no
+		additional help. After that I went back and figured out how to make
+		that work for dfs below.
 		"""
 		path = []
 		visited = []
