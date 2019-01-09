@@ -28,8 +28,8 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 	def deleteEdge(self,x,y):
 		"""Deletes edge from the adjacency list of the first node if it exists."""
-		if y in self.edges[x]:
-			self.edges[x].remove(y)
+		if self.edges[self.vertices[x]][self.vertices[y]] == 1:
+			self.edges[self.vertices[x]][self.vertices[y]] = 0
 		else:
 			print("No edge to remove.")
 
@@ -148,6 +148,9 @@ test.addNode(1)
 test.addNode(3)
 test.addNode(4)
 test.addEdge(2,1)
+test.addEdge(4,6)
+test.deleteEdge(4,6)
+test.deleteEdge(2,1)
 print(test.edges)
 #test.addEdge(2,0)
 #test.addEdge(2,3)
