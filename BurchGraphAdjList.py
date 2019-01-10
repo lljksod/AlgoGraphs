@@ -59,42 +59,23 @@ class BurchGraphAdjList(BurchGraph):
 				self.edges[i].remove(x)
 
 
-	def dfs(g, startNode, action = print, path = []):
-		"""This function researched and derived from:
-		https://www.koderdojo.com/blog/depth-first-search-in-python-recursive-and-non-recursive-programming
-		Action can accept a lambda function to perform on each nodes payload."""
-		"""
-		path += [startNode]
+	def dfs(g, startNode, action = print, stack = [], visited = []):
+		"""https://visualgo.net/en/dfsbfs """
 
-		for neighbor in g.edges[startNode]:
-			if neighbor not in path:
-				path = g.dfs(neighbor, action, path)
+		stack.append(startNode)
+		visited.append(startNode)
+		neighbors = g.edges[startNode]
+		action(startNode)
 
-		#action(g.payloads[startNode])
-		print(startNode)
+		for node in neighbors:
+			if node not in visited:
+				g.dfs(node, stack = stack, visited = visited)
 
-		return path
-		Originally used the above method. After figuring this part out I was
-		able to put together a non-recursive version of bfs below with no
-		additional help. After that I went back and figured out how to make
-		that work for dfs.
-		"""
-		path = []
-		visited = []
-
-		path.append(startNode)
-
-
-		for node in path:
-			visited.append(node)
-			for neighbor in g.edges[node]:
-				if neighbor not in visited:
-					path.append(neighbor)
-					
-		while path:
-			action(path.pop(-1))
+		
+		
 
 	def bfs(g, startNode, action = print):
+		"""
 		path = []
 		visited = []
 
@@ -108,13 +89,29 @@ class BurchGraphAdjList(BurchGraph):
 				if neighbor not in visited:
 					path.append(neighbor)
 					action(neighbor)
+		"""
+		stack = []
+		visited = []
+
+		stack.append(startNode)
 
 
+		while stack:
+
+			currentNode = stack.pop(0)
+
+			if currentNode not in visited:
+				visited.append(currentNode)
+				action(currentNode)
+
+				for neighbor in g.edges[currentNode]:
+					if neighbor not in visited:
+						stack.append(neighbor)
 
 
 if __name__ == '__main__':
 	test = BurchGraphAdjList()
-
+	"""
 	test.addNode('a', 2)
 	test.addNode(0)
 	test.addEdge('a',0)
@@ -132,7 +129,7 @@ if __name__ == '__main__':
 	lambda nodePayload: print(abs(nodePayload))
 	print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
 	test.bfs('a')
-
+	"""
 	test.addNode(2)
 	test.addEdge(2,0)
 	test.addEdge(2,3)
@@ -143,11 +140,3 @@ if __name__ == '__main__':
 	print(test.neighbors(2))
 	test.dfs(2)
 	test.bfs(2)
-
-	testlist = []
-	testlist.append(0)
-	testlist.append(1)
-	testlist.append(2)
-	testlist.append(3)
-	testlist.append('test')
-	print(testlist.pop(-1))

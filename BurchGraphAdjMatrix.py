@@ -105,22 +105,22 @@ class BurchGraphAdjMatrix(BurchGraph):
 		visited = []
 
 		path.append(startNode)
-
+		visited.append(startNode)
 		action(startNode)
 		print('Initial Path ' + str(path))
 
 
-		for node in path:
+		while path:
+			node = path.pop(-1)
 			visited.append(node)
 			index = 0
 			print("index = " + str(g.vertices[node]))
 			for neighbor in g.edges[g.vertices[node]]:
+				print("neighbor = " + str(neighbor))
 				if (neighbor == 1) & (list(g.vertices.keys())[index] not in visited):
 					path.append(list(g.vertices.keys())[index])
 				index += 1
 					
-		while path:
-			action(path.pop(-1))
 
 	def bfs(g, startNode, action = print):
 		path = []
@@ -146,7 +146,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 if __name__ == '__main__':
 	test = BurchGraphAdjMatrix()
-
+	"""
 	test.addNode('a', 2)
 	test.addNode(0)
 	test.addEdge('a',0)
@@ -164,7 +164,7 @@ if __name__ == '__main__':
 	lambda nodePayload: print(abs(nodePayload))
 	print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
 	test.bfs('a')
-
+	"""
 	test.addNode(2)
 	test.addEdge(2,0)
 	test.addEdge(2,3)
@@ -174,4 +174,4 @@ if __name__ == '__main__':
 	test.addEdge(3,3)
 	print('nighbors of 3 =' + str(test.neighbors(0)))
 	test.dfs(2)
-	test.bfs(2)
+	#test.bfs(2)
