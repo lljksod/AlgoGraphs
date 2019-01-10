@@ -115,8 +115,8 @@ class BurchGraphAdjList(BurchGraph):
 
 
 
-test = BurchGraphAdjList()
-"""
+"""test = BurchGraphAdjList()
+
 test.addNode('a', 2)
 test.addNode(0)
 test.addEdge('a',0)
@@ -133,7 +133,7 @@ test.addEdge('a',1, -3)
 print(test.neighbors('a'))
 lambda nodePayload: print(abs(nodePayload))
 print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
-test.bfs('a')"""
+test.bfs('a')
 
 test.addNode(2)
 test.addEdge(2,0)
@@ -153,3 +153,4 @@ testlist.append(2)
 testlist.append(3)
 testlist.append('test')
 print(testlist.pop(-1))
+"""
