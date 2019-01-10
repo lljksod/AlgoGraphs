@@ -1,9 +1,7 @@
 import abc
 
 class BurchGraph(abc.ABC):
-	"""Abstract Base Class for graph. Payloads is included as a dictionary so all child classes
-	will have it by default. It will store the name of the node as a dictionary key, and the 
-	value associated to it as the keys value. Key must be an immutable, int, string, or tupple."""
+	"""Abstract Base Class for graph. """
 	
 	def __init__(self):
 		self.payloads = dict()

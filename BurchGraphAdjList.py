@@ -77,15 +77,12 @@ class BurchGraphAdjList(BurchGraph):
 		Originally used the above method. After figuring this part out I was
 		able to put together a non-recursive version of bfs below with no
 		additional help. After that I went back and figured out how to make
-		that work for dfs below.
+		that work for dfs.
 		"""
 		path = []
 		visited = []
 
 		path.append(startNode)
-
-		action(startNode)
-		print('Initial Path ' + str(path))
 
 
 		for node in path:
@@ -93,7 +90,6 @@ class BurchGraphAdjList(BurchGraph):
 			for neighbor in g.edges[node]:
 				if neighbor not in visited:
 					path.append(neighbor)
-					print('Path ' + str(path))
 					
 		while path:
 			action(path.pop(-1))
@@ -116,43 +112,42 @@ class BurchGraphAdjList(BurchGraph):
 
 
 
+if __name__ == '__main__':
+	test = BurchGraphAdjList()
 
-"""test = BurchGraphAdjList()
+	test.addNode('a', 2)
+	test.addNode(0)
+	test.addEdge('a',0)
+	test.addEdge('a',1, -3)
+	test.deleteEdge('a',1)
+	test.deleteEdge('a',1)
+	test.deleteNode(0)
+	test.addEdge('a', 'b', 4)
+	print(test.payloads)
+	print(test.edges)
+	print(test.adjacent('a','b'))
+	test.addEdge('a',0, -2)
+	test.addEdge('a',1, -3)
+	print(test.neighbors('a'))
+	lambda nodePayload: print(abs(nodePayload))
+	print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
+	test.bfs('a')
 
-test.addNode('a', 2)
-test.addNode(0)
-test.addEdge('a',0)
-test.addEdge('a',1, -3)
-test.deleteEdge('a',1)
-test.deleteEdge('a',1)
-test.deleteNode(0)
-test.addEdge('a', 'b', 4)
-print(test.payloads)
-print(test.edges)
-print(test.adjacent('a','b'))
-test.addEdge('a',0, -2)
-test.addEdge('a',1, -3)
-print(test.neighbors('a'))
-lambda nodePayload: print(abs(nodePayload))
-print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
-test.bfs('a')
+	test.addNode(2)
+	test.addEdge(2,0)
+	test.addEdge(2,3)
+	test.addEdge(0,2)
+	test.addEdge(0,1)
+	test.addEdge(1,2)
+	test.addEdge(3,3)
+	print(test.neighbors(2))
+	test.dfs(2)
+	test.bfs(2)
 
-test.addNode(2)
-test.addEdge(2,0)
-test.addEdge(2,3)
-test.addEdge(0,2)
-test.addEdge(0,1)
-test.addEdge(1,2)
-test.addEdge(3,3)
-print(test.neighbors(2))
-test.dfs(2)
-test.bfs(2)
-
-testlist = []
-testlist.append(0)
-testlist.append(1)
-testlist.append(2)
-testlist.append(3)
-testlist.append('test')
-print(testlist.pop(-1))
-"""
+	testlist = []
+	testlist.append(0)
+	testlist.append(1)
+	testlist.append(2)
+	testlist.append(3)
+	testlist.append('test')
+	print(testlist.pop(-1))
