@@ -2,7 +2,9 @@ from BurchGraphClass import BurchGraph
 
 class BurchGraphAdjList(BurchGraph):
 	
-	edges = dict()
+	def __init__(self):
+		self.edges = dict()
+		self.payloads = dict()
 
 	def adjacent(self,x,y):
 		if y in self.edges[x]:

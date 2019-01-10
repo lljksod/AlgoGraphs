@@ -2,8 +2,10 @@ from BurchGraphClass import BurchGraph
 
 class BurchGraphAdjMatrix(BurchGraph):
 	
-	vertices = dict()
-	edges = []
+	def __init__(self):
+		self.vertices = dict()
+		self.edges = []
+		self.payloads = dict()
 
 	def adjacent(self,x,y):
 		if self.edges[self.vertices[x]][self.vertices[y]] == 1:
