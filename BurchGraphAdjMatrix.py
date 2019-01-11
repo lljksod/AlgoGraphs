@@ -81,7 +81,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 		del self.vertices[x]
 
 
-	def dfs(g, startNode, action = print, path = []):
+	def dfs(g, startNode, action = print, stack = [], visited = []):
 		"""This function researched and derived from:
 		https://www.koderdojo.com/blog/depth-first-search-in-python-recursive-and-non-recursive-programming
 		Action can accept a lambda function to perform on each nodes payload."""
@@ -101,26 +101,16 @@ class BurchGraphAdjMatrix(BurchGraph):
 		additional help. After that I went back and figured out how to make
 		that work for dfs below.
 		"""
-		path = []
-		visited = []
-
-		path.append(startNode)
+		
+		neighbors = list(g.edges[g.vertices[startNode]])
+		stack.append(startNode)
 		visited.append(startNode)
 		action(startNode)
-		print('Initial Path ' + str(path))
-
-
-		while path:
-			node = path.pop(-1)
-			visited.append(node)
-			index = 0
-			print("index = " + str(g.vertices[node]))
-			for neighbor in g.edges[g.vertices[node]]:
-				print("neighbor = " + str(neighbor))
-				if (neighbor == 1) & (list(g.vertices.keys())[index] not in visited):
-					path.append(list(g.vertices.keys())[index])
-				index += 1
-					
+		index = 0
+		for node in neighbors:
+			if (node == 1) & (list(g.vertices.keys())[index] not in visited):
+				g.dfs(list(g.vertices.keys())[index],stack = stack, visited = visited)
+			index += 1
 
 	def bfs(g, startNode, action = print):
 		path = []
