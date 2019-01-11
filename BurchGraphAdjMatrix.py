@@ -91,7 +91,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 		index = 0
 		for node in neighbors:
 			if (node == 1) & (list(g.vertices.keys())[index] not in visited):
-				g.dfs(list(g.vertices.keys())[index],stack = stack, visited = visited)
+				g.dfs(list(g.vertices.keys())[index],action = action,stack = stack, visited = visited)
 			index += 1
 
 	def bfs(g, startNode, action = print):
@@ -116,4 +116,4 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
