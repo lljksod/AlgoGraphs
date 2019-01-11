@@ -82,25 +82,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 
 	def dfs(g, startNode, action = print, stack = [], visited = []):
-		"""This function researched and derived from:
-		https://www.koderdojo.com/blog/depth-first-search-in-python-recursive-and-non-recursive-programming
-		Action can accept a lambda function to perform on each nodes payload."""
-		"""
-		path += [startNode]
-
-		for neighbor in g.edges[startNode]:
-			if neighbor not in path:
-				path = g.dfs(neighbor, action, path)
-
-		#action(g.payloads[startNode])
-		print(startNode)
-
-		return path
-		Originally used the above method. After figuring this part out I was
-		able to put together a non-recursive version of bfs below with no
-		additional help. After that I went back and figured out how to make
-		that work for dfs below.
-		"""
+		"""https://visualgo.net/en/dfsbfs """
 		
 		neighbors = list(g.edges[g.vertices[startNode]])
 		stack.append(startNode)
@@ -127,7 +109,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 					path.append(list(g.vertices.keys())[index])
 				index += 1
 			
-		print(path)
+		print("path " + str(path))
 		while path:
 			action(path.pop(0))
 
@@ -135,33 +117,3 @@ class BurchGraphAdjMatrix(BurchGraph):
 
 
 if __name__ == '__main__':
-	test = BurchGraphAdjMatrix()
-	"""
-	test.addNode('a', 2)
-	test.addNode(0)
-	test.addEdge('a',0)
-	test.addEdge('a',1, -3)
-	test.deleteEdge('a',1)
-	test.deleteEdge('a',1)
-	test.deleteNode(0)
-	test.addEdge('a', 'b', 4)
-	print(test.payloads)
-	print(test.edges)
-	print(test.adjacent('a','b'))
-	test.addEdge('a',0, -2)
-	test.addEdge('a',1, -3)
-	print(test.neighbors('a'))
-	lambda nodePayload: print(abs(nodePayload))
-	print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
-	test.bfs('a')
-	"""
-	test.addNode(2)
-	test.addEdge(2,0)
-	test.addEdge(2,3)
-	test.addEdge(0,2)
-	test.addEdge(0,1)
-	test.addEdge(1,2)
-	test.addEdge(3,3)
-	print('nighbors of 3 =' + str(test.neighbors(0)))
-	test.dfs(2)
-	#test.bfs(2)

@@ -75,21 +75,7 @@ class BurchGraphAdjList(BurchGraph):
 		
 
 	def bfs(g, startNode, action = print):
-		"""
-		path = []
-		visited = []
-
-		path.append(startNode)
-
-		action(startNode)
-
-		for node in path:
-			visited.append(node)
-			for neighbor in g.edges[path.pop(0)]:
-				if neighbor not in visited:
-					path.append(neighbor)
-					action(neighbor)
-		"""
+	
 		stack = []
 		visited = []
 
@@ -110,33 +96,3 @@ class BurchGraphAdjList(BurchGraph):
 
 
 if __name__ == '__main__':
-	test = BurchGraphAdjList()
-	"""
-	test.addNode('a', 2)
-	test.addNode(0)
-	test.addEdge('a',0)
-	test.addEdge('a',1, -3)
-	test.deleteEdge('a',1)
-	test.deleteEdge('a',1)
-	test.deleteNode(0)
-	test.addEdge('a', 'b', 4)
-	print(test.payloads)
-	print(test.edges)
-	print(test.adjacent('a','b'))
-	test.addEdge('a',0, -2)
-	test.addEdge('a',1, -3)
-	print(test.neighbors('a'))
-	lambda nodePayload: print(abs(nodePayload))
-	print(test.dfs('a', action = lambda nodePayload: print(nodePayload * 2)))
-	test.bfs('a')
-	"""
-	test.addNode(2)
-	test.addEdge(2,0)
-	test.addEdge(2,3)
-	test.addEdge(0,2)
-	test.addEdge(0,1)
-	test.addEdge(1,2)
-	test.addEdge(3,3)
-	print(test.neighbors(2))
-	test.dfs(2)
-	test.bfs(2)
