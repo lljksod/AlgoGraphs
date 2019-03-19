@@ -5,9 +5,9 @@ import time
 def generateNewGraph(numberOfNodes, edgeProbability):
 
     generatedGraph = BurchGraphAdjList()
-    nodes = []
+    nodes = set()
     for i in range(numberOfNodes):
-        nodes.append(i)
+        nodes.add(i)
         generatedGraph.addNode(i)
 
         for j in nodes:
@@ -43,3 +43,5 @@ if __name__ == '__main__':
         print(newGraph.edges)
         print("Weights: ")
         print(newGraph.weights)
+        shortestGraph = myGraph.dijkstra(0)
+        print(shortestGraph.weights)
