@@ -1,4 +1,8 @@
 from BurchGraphClass import BurchGraph
+import heapq
+
+if __name__ == '__main__':
+	from BurchGraphAdjList import BurchGraphAdjList
 
 class BurchGraphAdjMatrix(BurchGraph):
 	
@@ -8,7 +12,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 		self.payloads = dict()
 
 	def adjacent(self,x,y):
-		if self.edges[self.vertices[x]][self.vertices[y]] == 1:
+		if self.edges[self.vertices[x]][self.vertices[y]] != 0:
 			return True
 		else:
 			return False
@@ -17,14 +21,14 @@ class BurchGraphAdjMatrix(BurchGraph):
 		nbors = []
 		index = 0
 		for edge in self.edges[self.vertices[x]]:
-			if edge == 1:
+			if edge != 0:
 				nbors.append(list(self.vertices.keys())[index])
 			index += 1
 
 		return nbors
 
 
-	def addEdge(self,x,y,ypload = None):
+	def addEdge(self,x,y,ypload = None, weight = 1):
 		""" Adds edge between the provided nodes. If the second node does not exist it is
 		created."""
 		if x not in self.payloads.keys():
@@ -34,13 +38,15 @@ class BurchGraphAdjMatrix(BurchGraph):
 		if y not in self.payloads.keys():
 			self.addNode(y,ypload)
 
-		self.edges[self.vertices[x]][self.vertices[y]] = 1
-
+		if ypload != None:
+			self.edges[self.vertices[x]][self.vertices[y]] = ypload
+		else:
+			self.edges[self.vertices[x]][self.vertices[y]] = weight
 
 
 	def deleteEdge(self,x,y):
 		"""Deletes edge from the adjacency list of the first node if it exists."""
-		if self.edges[self.vertices[x]][self.vertices[y]] == 1:
+		if self.edges[self.vertices[x]][self.vertices[y]] >= 1:
 			self.edges[self.vertices[x]][self.vertices[y]] = 0
 		else:
 			print("No edge to remove.")
@@ -55,7 +61,7 @@ class BurchGraphAdjMatrix(BurchGraph):
 			while len(self.edges[self.vertices[x]]) < self.vertices[x]:
 				self.edges[self.vertices[x]].append(0)
 
-			self.edges[self.vertices[x]].append(1)
+			self.edges[self.vertices[x]].append(0)
 			
 			for node in self.edges:
 				while len(node) < self.vertices[x] + 1:
@@ -113,7 +119,62 @@ class BurchGraphAdjMatrix(BurchGraph):
 		while path:
 			action(path.pop(0))
 
+	def minimumSpanningTree(g):
+		#Researched and derived from: https://gist.github.com/Peng-YM/84bd4b3f6ddcb75a147182e6bdf281a6
+		#tree will be stored in a list based graph
+		mst = BurchGraphAdjMatrix()
+		mst.addNode(list(g.vertices.keys())[0])
+		#initialize weight
+		weight = 0
+		#set vert to first vert in new graph
+		vert = list(g.vertices.keys())[0]
+
+		#use the number of vertices added to the mst graph as the vert counter
+		while len(list(mst.payloads.keys())) != len(g.payloads.keys()):
+			crossing = []
+			
+			for k in list(g.vertices.keys()):
+				weight = g.edges[vert][k]
+				if (weight > 0) and (k not in list(mst.payloads.keys())):
+					heapq.heappush(crossing, (weight, (vert, k)))
+			#get smallest weight edge from min-heap
+			edge = heapq.heappop(crossing)
+			#add this edge to the mst graph
+			mst.addEdge(edge[1][0],edge[1][1], weight=edge[0])
+			#set neighbor as next node to be processed
+			vert = edge[1][1]
+
+			
+		return mst
+
+def convertToMatrix(listGraph):
+
+	if type(listGraph) is BurchGraphAdjList:
+		convertedMatrixGraph = BurchGraphAdjMatrix()
+
+		convertedMatrixGraph.addNode(list(listGraph.edges.keys())[0])
+
+		for vert in listGraph.edges:
+			for edge in listGraph.edges[vert]:
+				convertedMatrixGraph.addEdge(vert, edge)
+
+		return convertedMatrixGraph
+	else:
+		print("Object Must Be List Graph")
 
 
+if __name__ == '__main__':
 
-#if __name__ == '__main__':
+	testGraph = BurchGraphAdjList()
+	testGraph.addNode(0)
+	testGraph.addEdge(0,1)
+	testGraph.addEdge(1,2)
+	testGraph.addEdge(2,3)
+
+	newGraph = convertToMatrix(testGraph)
+
+	if type(newGraph) is BurchGraphAdjMatrix:
+		print("ok!")
+
+	testGraph.dfs(0)
+	newGraph.dfs(0)

@@ -1,5 +1,6 @@
 import abc
 
+
 class BurchGraph(abc.ABC):
 	"""Abstract Base Class for graph. """
 	

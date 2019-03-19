@@ -1,10 +1,15 @@
 from BurchGraphClass import BurchGraph
+import heapq
+
+if __name__ == '__main__':
+	from BurchGraphAdjMatrix import BurchGraphAdjMatrix
 
 class BurchGraphAdjList(BurchGraph):
 	
 	def __init__(self):
 		self.edges = dict()
 		self.payloads = dict()
+		self.weights = dict()
 
 	def adjacent(self,x,y):
 		if y in self.edges[x]:
@@ -15,7 +20,7 @@ class BurchGraphAdjList(BurchGraph):
 	def neighbors(self,x):
 		return self.edges[x]
 
-	def addEdge(self,x,y,ypload = None):
+	def addEdge(self,x,y,ypload = None, weight = None):
 		""" Adds edge between the provided nodes. If the second node does not exist it is
 		created."""
 		if x not in self.payloads.keys():
@@ -26,6 +31,8 @@ class BurchGraphAdjList(BurchGraph):
 			self.addNode(y,ypload)
 
 		self.edges[x].append(y)
+		self.weights[x].append([y,weight])
+
 
 
 
@@ -42,6 +49,7 @@ class BurchGraphAdjList(BurchGraph):
 		if x not in self.payloads.keys():
 			self.payloads[x] = payload
 			self.edges[x] = []
+			self.weights[x] = []
 		else:
 			print('Node already exists.')
 
@@ -72,7 +80,6 @@ class BurchGraphAdjList(BurchGraph):
 				g.dfs(node, stack = stack, visited = visited)
 
 		
-		
 
 	def bfs(g, startNode, action = print):
 	
@@ -94,5 +101,79 @@ class BurchGraphAdjList(BurchGraph):
 					if neighbor not in visited:
 						stack.append(neighbor)
 
+	def minimumSpanningTree(g):
+		#Researched and derived from: https://gist.github.com/Peng-YM/84bd4b3f6ddcb75a147182e6bdf281a6
+		#tree will be stored in a list based graph
+		mst = BurchGraphAdjList()
+		mst.addNode(list(g.payloads.keys())[0])
+		#x will be a set used to track the vertices
+		vertices = set()
+		weight = 0
+		#vertices.add(list(g.payloads.keys())[0])
+		vert = list(g.payloads.keys())[0]
 
-#if __name__ == '__main__':
+		while len(list(mst.payloads.keys())) != len(g.payloads.keys()):
+			crossing = []
+			#for x in vertices:
+			#	"""for k in range(len(g.payloads.keys())):
+			#		for sublist in g.weights[x]:
+			#			if (sublist[0] == k):
+			#				weight = sublist[1]
+			#				break
+			#			else:
+			#				weight = 0"""
+				#i'm leaving the above comment(docstring) in, it worked but then i came up with this and it's much more efficient
+				#add all edges starting from the current vertex and their weights to a min-heap
+			
+			for sublist in g.weights[vert]:
+				k = sublist[0]
+				weight = sublist[1]
+				if (weight > 0) and (k not in list(mst.payloads.keys())):
+					heapq.heappush(crossing, (weight, (vert, k)))
+			#get smallest weight edge from min-heap
+			edge = heapq.heappop(crossing)
+			#add this edge to the mst graph
+			mst.addEdge(edge[1][0],edge[1][1], weight=edge[0])
+			#add neighbor to vertices set to be used
+			vert = edge[1][1]
+
+			
+		return mst
+
+def convertToList(matrixGraph):
+
+	if type(matrixGraph) is BurchGraphAdjMatrix:
+		convertedListGraph = BurchGraphAdjList()
+
+		convertedListGraph.addNode(matrixGraph.vertices[0])
+
+		iCoord = 0
+		for vert in matrixGraph.edges:
+			jCoord = 0
+			for edge in vert:
+				if edge == 1:
+					convertedListGraph.addEdge(list(matrixGraph.vertices)[iCoord], list(matrixGraph.vertices)[jCoord])
+				jCoord += 1
+			iCoord += 1
+
+		return convertedListGraph
+	else:
+		print("Object Must Be Matrix Graph")
+
+
+
+
+if __name__ == '__main__':
+
+	testGraph = BurchGraphAdjList()
+	testGraph.addNode(0)
+	testGraph.addEdge(0,1, weight=1)
+	testGraph.addEdge(1,2, weight=2)
+	testGraph.addEdge(2,3, weight=3)
+	newGraph = testGraph.minimumSpanningTree()
+
+	print(newGraph.edges)
+	print()
+	print(newGraph.weights)
+	
+	newGraph.dfs(0)
