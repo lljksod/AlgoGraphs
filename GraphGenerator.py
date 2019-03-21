@@ -26,7 +26,7 @@ def generateNewGraph(numberOfNodes, edgeProbability):
 
 if __name__ == '__main__':
 
-	nodeQuantity = [2,8,64,256,1024]
+	nodeQuantity = [8]
 
 	for num in nodeQuantity:
 		myGraph = generateNewGraph(num, 1)
@@ -40,3 +40,5 @@ if __name__ == '__main__':
 		newGraph.dfs(0)
 		print("Edges: ")
 		print(newGraph.edges)
+		shortestGraph = myGraph.dijkstra(0)
+		print(shortestGraph.vertices.keys())

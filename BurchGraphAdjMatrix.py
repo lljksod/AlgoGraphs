@@ -147,6 +147,55 @@ class BurchGraphAdjMatrix(BurchGraph):
 			
 		return mst
 
+	def dijkstra(self, source):
+		#researched and derived partially from: https://dev.to/mxl/dijkstras-algorithm-in-python-algorithms-for-beginners-dkc
+		# https://www.bogotobogo.com/python/python_Dijkstras_Shortest_Path_Algorithm.php
+
+		#initialize shortest path tree graph
+		spt = BurchGraphAdjMatrix()
+		spt.addNode(source)
+		#set var for infinity
+		inf = float('inf')
+		
+		#set all nodes to unvisited
+		unvisited = set()
+		for vert in self.vertices.keys():
+			unvisited.add(vert)
+
+		print(unvisited)
+		#set all distances to inf then source distance to 0
+		distances = {k:inf for (k,v) in self.vertices.items()}
+		distances[source] = 0
+		while unvisited:
+
+			#get node with smallest distance
+			#https://stackoverflow.com/questions/3282823/get-the-key-corresponding-to-the-minimum-value-within-a-dictionary
+			currentNode = min(unvisited, key = lambda vertex: distances[vertex])
+			print(currentNode)
+			if distances[currentNode] == inf:
+				break
+			#calculate distances to all unvisited nodes from current node
+			neighbor = 0
+			for weight in self.edges[currentNode]:
+				if weight > 0:
+					if neighbor in unvisited:
+						newDistance = distances[currentNode] + weight
+
+					if newDistance < distances[neighbor]:
+						distances[neighbor] = newDistance
+				neighbor += 1
+
+			
+			#remove current node from unvisited
+			unvisited.remove(currentNode)
+
+			#find closest neighbor and add it to the shortest path tree
+			if len(unvisited) != 0:
+				closestNeighbor = min(unvisited, key = lambda vertex: distances[vertex])
+				spt.addEdge(currentNode, closestNeighbor, weight=weight)
+
+		return spt
+
 def convertToMatrix(listGraph):
 
 	if type(listGraph) is BurchGraphAdjList:
